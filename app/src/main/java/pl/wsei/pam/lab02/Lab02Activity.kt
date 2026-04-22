@@ -1,5 +1,6 @@
 package pl.wsei.pam.lab02
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import pl.wsei.pam.lab01.R
+import pl.wsei.pam.lab03.Lab03Activity
 
 class Lab02Activity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,10 +27,13 @@ class Lab02Activity : AppCompatActivity() {
         val tag = view.tag as? String
         if (tag != null) {
             val dimensions = tag.split(" ")
+            val intent = Intent(this, Lab03Activity::class.java)
             if (dimensions.size == 2) {
-                val rows = dimensions[0]
-                val cols = dimensions[1]
-                Toast.makeText(this, "Selected board: $rows x $cols", Toast.LENGTH_SHORT).show()
+                val rows = dimensions[0].toIntOrNull() ?: 4
+                val cols = dimensions[1].toIntOrNull() ?: 3
+                intent.putExtra("rows", rows)
+                intent.putExtra("columns", cols)
+                startActivity(intent)
             }
         }
     }
